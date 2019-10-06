@@ -29,6 +29,9 @@ func main() {
 		return
 	}
 
+	fmt.Fprintf(os.Stderr, "bot started\n")
+	defer fmt.Fprintf(os.Stderr, "bot shutting down\n")
+
 	for {
 		var msg kbchat.SubscriptionMessage
 		if msg, err = sub.Read(); err != nil {
