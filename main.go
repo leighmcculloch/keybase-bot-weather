@@ -12,6 +12,20 @@ import (
 	"github.com/keybase/go-keybase-chat-bot/kbchat"
 )
 
+func health() {
+	ok200 := func(w http.ResponseWriter, req *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "OK")
+	}
+	mux := http.ServeMux{}
+	mux.HandleFunc("/", ok200)
+	svr := http.Server{
+		Addr:    ":" + os.Getenv("PORT"),
+		Handler: &mux,
+	}
+	svr.ListenAndServe()
+}
+
 func main() {
 	const kbLocation = "keybase"
 
@@ -31,6 +45,8 @@ func main() {
 
 	fmt.Fprintf(os.Stderr, "bot started\n")
 	defer fmt.Fprintf(os.Stderr, "bot shutting down\n")
+
+	go health()
 
 	for {
 		var msg kbchat.SubscriptionMessage

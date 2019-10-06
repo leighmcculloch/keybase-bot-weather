@@ -15,6 +15,6 @@ RUN apt-get -y install ca-certificates build-essential
 RUN apt-get -y install ./keybase_amd64.deb
 RUN useradd -m keybase
 USER keybase
-COPY ./docker/entrypoint.sh ./
+COPY ./entrypoint.sh ./
 COPY --from=builder /bin/bot ./bot
 CMD ["./entrypoint.sh"]
